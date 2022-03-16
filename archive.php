@@ -2,14 +2,14 @@
 <html <?php language_attributes(); ?>>
 
 <head>
-  <!-- パーツファイルでheaderをレンダリングしている(Bootstrap,フォント,css,wp_head) -->
-  <?php get_header(); ?>
+<!-- パーツファイルでheaderをレンダリングしている(Bootstrap,フォント,css,wp_head) -->
+<?php get_header(); ?>
 </head>
 
 <body>
 
-  <!-- get_template_part('相対パス(拡張子ははずす)') : 汎用パーツファイルの読み込み -->
-  <?php get_template_part('includes/header'); ?>
+<!-- get_template_part('相対パス(拡張子ははずす)') : 汎用パーツファイルの読み込み -->
+<?php get_template_part('includes/header'); ?>
 
   <!-- Page Header -->
   <header class="masthead" style="background-image: url('img/home-bg.jpg')">
@@ -18,9 +18,18 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="site-heading">
-            <!-- bloginfo('項目') : 一般設定で設定したブログの情報を出力 -->
-            <h1><?php bloginfo('name'); ?></h1>
-            <span><?php bloginfo('description');?></span>
+            <!-- is_category() : ページがカテゴリーアーカイブならtrue,違うならfalse -->
+            <?php if (is_category()) : ?>
+            <h1>Category</h1>
+            <!-- is_author() : 投稿者アーカイブならtrue,違うならfalse -->
+            <?php elseif(is_author()): ?>
+              <h1>Author</h1>
+            <?php elseif(is_date()): ?>
+              <h1>Date</h1>
+            <?php else: ?>
+              <h1>Tag</h1>
+            <?php endif; ?>
+            <span class="subheading"><?php the_title(); ?></span>
           </div>
         </div>
       </div>
@@ -63,11 +72,8 @@
 
           <!-- Pager -->
           <div class="clearfix">
-            <?php
-            // get_previous_posts_link('リンク名') : ページネーションで前ページに移るためのリンク名を取得
+          <?php
             $link = get_previous_posts_link('&larr; 新しい記事へ;');
-            // str_replace('置き換える場所','置き換える文字','置き換える対象') : 文字列を指定した文字に置き換える、urlを動的に作成できる
-            // 最初のページではページネーションの戻るボタンを表示させない
             if ($link) {
               $link = str_replace('<a', '<a class="btn btn-primary float-left"', $link);
               echo $link;
@@ -75,16 +81,12 @@
             ?>
 
             <?php
-            // get_next_posts_link('リンク名') : ページネーションで次ページに移るためのリンク名を取得
             $link = get_next_posts_link('古い記事へ &rarr;');
-            // str_replace('置き換える場所','置き換える文字','置き換える対象') : 文字列を指定した文字に置き換える、urlを動的に作成できる
-            // 最後のページではページネーションの進むボタンを表示させない
             if ($link) {
               $link = str_replace('<a', '<a class="btn btn-primary float-right"', $link);
               echo $link;
             }
             ?>
-
           </div>
         <?php else : ?>
           <p>記事が見つかりませんでした。</p>
@@ -95,10 +97,10 @@
 
   <hr>
 
-  <?php get_template_part('includes/footer'); ?>
+<?php get_template_part('includes/footer'); ?>
 
-  <!-- パーツファイルでfooter情報をレンダリングしている(JS,Custom script,wp_footerの情報)-->
-  <?php get_footer(); ?>
+<!-- パーツファイルでfooter情報をレンダリングしている(JS,Custom script,wp_footerの情報)-->
+<?php get_footer(); ?>
 </body>
 
 </html>

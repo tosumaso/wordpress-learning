@@ -9,6 +9,55 @@ header.php: header情報をパーツファイルにしたファイル。get_head
 footer.php: footer情報をパーツファイルにしたファイル。get_footer();で呼び出せる
 sidebar.php: sidebar情報をパーツファイルにしたファイル。get_sidebar();で呼び出せる
 
+## functions.php
+フックを記述する。wordpressの各ファイルが参照する設定ファイル。
+関数を定義できる。
+phpファイルにphpの記述しかしない場合、phpの閉じタグを省略できる。htmlのコメントを書く場合は省略できない。
+
+## 配列
+$変数 = []; or array(); 角かっこの方が新しい。
+$連想配列: 添え字に文字を付けられる。$変数['文字']で出力できる。
+
+## 投稿、固定ページのループ
+have_posts()で投稿があるか確認、その後whileでhave_posts()からthe_post()で投稿を１つずつ取り出して
+titleやcontentを表示する
+
+## パーマリンク(リソースファイルのURL)
+固定ページのパーマリンク : ページを公開してから固定ページの編集: 設定: パーマリンク: URLスラッグで変更
+固定ページの階層パーマリンク : 固定ページの編集:ページ属性で親ページを指定、親スラッグ/子スラッグの形でURLを登録できる
+投稿ページのパーマリンク : 設定:パーマリンク設定でurlに日付を入れる。
+おすすめの投稿ページパーマリンク設定 : /year/month/post_id ; 日付と投稿idをつけることで他のリソースと被らず簡単に識別できるため。
+パーマリンクの設定の保存をするとブログのディレクトリに.htaccessファイルが作成されパーマリンクの変更を保存する
+"."から始まるためcmd + shift + .で隠しファイルを表示させて確認。消した場合はもう一度パーマリンクの変更を保存する
+
+## お問い合わせフォーム作成プラグイン(MW WP Form)
+localだとメールサーバーの確認ができない
+テキストで作成する場合、textareaタグやbuttonタグをマウス操作で作成できる
+作成したらフォーム識別子内のショートコードをコピーして固定ページに貼り付ける
+バリデーションルールでショートコードのname属性を指定してバリデーションを作成できる
+
+## カテゴリーとタグ
+カテゴリー: 親子関係可。カテゴリーを登録しなくても未分類(unauthorized)カテゴリーに分類される。
+タグ: 親子関係不可。タグをつけないことも可能。
+設定:パーマリンクでカテゴリベースのurlを変更できる。
+
+## wp_title(separator,出力フラグ,separatotlocation)タグ
+ページの種類によって出力内容が変わる
+固定ページ、投稿: 記事タイトル、カテゴリーアーカイブ: カテゴリー名、タグアーカイブ: タグ名、日付アーカイブ: 日付、トップページ: なし
+
+## テーマユニットテスト
+テーマ作成時、レイアウトのズレがないか確認するためにいろんなテストファイルを読み込んで正しく表示されるかテストする
+ツール:インポートからwordpressのインポーターをインストール、xmlのテストファイルをアップロード
+
+## メニューの作成
+方法１: wp_nav_menu(設定array)で出力
+方法２: wp_get_nav_menu_items(menuのid)でメニューの項目を配列で取得して出力(難)
+
+## エスケープ処理
+dbのデータを直接出力するときは出力するものによって関数を使い分けてエスケープ処理をする。
+
+
+
 <!-- # [Start Bootstrap - Clean Blog](https://startbootstrap.com/theme/clean-blog/)
 
 [Clean Blog](https://startbootstrap.com/theme/clean-blog/) is a stylish, responsive blog theme for [Bootstrap](https://getbootstrap.com/) created by [Start Bootstrap](https://startbootstrap.com/). This theme features a blog homepage, about page, contact page, and an example post page along with a working PHP contact form.
